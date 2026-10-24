@@ -1,8 +1,9 @@
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import ReduxProvider from "./reduxProvider";
 import "./globals.css";
+// Restore the session when the browser refreshes
+import AuthInitializer from "./components/AuthInitializer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +27,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <AuthInitializer />
+          {children}
+        </ReduxProvider>
       </body>
     </html>
   );
